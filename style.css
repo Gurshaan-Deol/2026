@@ -1,0 +1,142 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f6a5c1; /* Soft pink */
+    font-family: 'Arial', sans-serif;
+    overflow: hidden; /* Prevents scrollbars when button moves */
+}
+
+.container {
+    text-align: center;
+}
+
+h1 {
+    color: #ff257e;
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+} 
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Use a dynamic gap that adjusts based on the button size */
+    gap: 20px; 
+    margin-top: 50px;
+    height: 200px; /* Gives the Yes button room to grow without moving the text */
+}
+
+button {
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.4s ease;
+}
+
+#yesButton {
+    background-color: #e81e63;
+    color: rgb(255, 255, 255);
+    transition: all 0.3s ease; /* Ensures size and glow changes are smooth */
+    z-index: 10; /* Ensures it stays "above" the No button and the glow isn't hidden */
+    
+   /* Variables for intensity */
+    --glow-color: #e81e63;
+    --glow-blur: 0px;
+    
+  /* Multiple shadows create a "hot" core */
+  box-shadow: 
+      0 0 var(--glow-blur) var(--glow-color),
+      0 0 calc(var(--glow-blur) / 2) var(--glow-color);
+}
+
+/* Optional: Add a pulsing animation for extra effect */
+@keyframes pulseGlow {
+    0% { transform: scale(var(--current-scale)); opacity: 1; }
+    50% { transform: scale(calc(var(--current-scale) * 1.05)); opacity: 0.8; }
+    100% { transform: scale(var(--current-scale)); opacity: 1; }
+}
+
+.apply-pulse {
+    animation: pulseGlow 1.5s infinite ease-in-out;
+}
+
+#noButton {
+    background-color: #e81e63;
+    color: white;
+    /* Keep it relative so it stays in the flexbox flow for now */
+    position: relative; 
+    transition: all 0.8s ease;
+    white-space: nowrap;
+}
+
+/* The actual shaking movement */
+@keyframes shake {
+    0% { transform: translate(0, 0); }
+    25% { transform: translate(var(--shake-dist), var(--shake-dist)); }
+    50% { transform: translate(calc(-1 * var(--shake-dist)), 0); }
+    75% { transform: translate(var(--shake-dist), calc(-1 * var(--shake-dist))); }
+    100% { transform: translate(0, 0); }
+}
+
+/* A class we can toggle in JavaScript */
+.apply-shake {
+    animation: shake 0.1s infinite;
+}
+
+#errorPopup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Dims the background */
+    display: none; /* Hidden by default */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Makes sure it's on top of everything */
+}
+
+.error-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #ffffff;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.error-content span {
+    font-weight: bold;
+    color: #d32f2f;
+}
+
+.error-hidden {
+    display: none;
+}
+
+/* Cursor Trail Effect */
+.trail {
+    position: absolute;
+    pointer-events: none;
+    width: 20px; /* Adjust size of the trail image */
+    height: 20px;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    z-index: 10000; /* Ensure it's on top */
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: translateY(0) rotate(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-80px) rotate(45deg);
+    }
+}
