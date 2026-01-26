@@ -33,6 +33,7 @@ noButton.addEventListener('click', () => {
     // 3. THE SHAKE: Increase intensity
     const shakeIntensity = clickCount * 0.5; 
     noButton.style.setProperty('--shake-dist', `${shakeIntensity}px`);
+  
 
     if (!noButton.classList.contains('apply-shake')) {
         noButton.classList.add('apply-shake');
@@ -80,6 +81,15 @@ noButton.addEventListener('mousemove', () => {
     }
 });
 
+noButton.addEventListener('click', () => {
+  const audio = new Audio("sounds/mainPage/vine-boom.mp3");
+    clickCount++;
+    // TRIGGER THE POP-UP
+    spawnPopImage();
+    audio.play()
+
+});
+
 // Backup runaway for fast movements
 noButton.addEventListener('mouseover', () => {
     if (clickCount >= phrases.length - 1) {
@@ -89,8 +99,29 @@ noButton.addEventListener('mouseover', () => {
 });
 
 function moveButton() {
-    const x = Math.random() * (window.innerWidth - noButton.offsetWidth);
-    const y = Math.random() * (window.innerHeight - noButton.offsetHeight);
+    const yesRect = yesButton.getBoundingClientRect();
+    const noWidth = noButton.offsetWidth;
+    const noHeight = noButton.offsetHeight;
+    
+    let x, y;
+    let isOverlapping = true;
+    let attempts = 0;
+
+    // Try to find a spot that doesn't overlap with the Yes button
+    while (isOverlapping && attempts < 50) {
+        x = Math.random() * (window.innerWidth - noWidth);
+        y = Math.random() * (window.innerHeight - noHeight);
+
+        // Check for overlap with Yes button (with a 20px buffer)
+        if (x < yesRect.right + 20 && x + noWidth > yesRect.left - 20 &&
+            y < yesRect.bottom + 20 && y + noHeight > yesRect.top - 20) {
+            isOverlapping = true;
+        } else {
+            isOverlapping = false;
+        }
+        attempts++;
+    }
+
     noButton.style.left = `${x}px`;
     noButton.style.top = `${y}px`;
 }
@@ -113,7 +144,6 @@ document.addEventListener('mousemove', (e) => {
     const trail = document.createElement('img');
     
     // REPLACE THE URL BELOW WITH YOUR IMAGE
-    // I've added a placeholder heart for now
     trail.src = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0icmVkIj48cGF0aCBkPSJNMTIgMjEuMzVsLTEuNDUtMS4zMkM1LjQgMTUuMzYgMiAxMi4yOCAyIDguNSAyIDUuNDIgNC40MiAzIDcuNSAzYzEuNzQgMCAzLjQxLjgxIDQuNSAyLjA5QzEzLjA5IDMuODEgMTQuNzYgMyAxNi41IDMgMTkuNTggMyAyMiA1LjQyIDIyIDguNWMwIDMuNzgtMy40IDYuODYtOC41NSAxMS41NEwxMiAyMS4zNXoiLz48L3N2Zz4='; 
     
     trail.className = 'trail';
@@ -136,3 +166,21 @@ document.addEventListener('mousemove', (e) => {
         trail.remove();
     }, 500);
 });
+
+function spawnPopImage() {
+    const img = document.createElement('img');
+    
+    // Replace 'sad-cat.png' with whatever image you want to pop up
+    img.src = "images/mainPage/dogSideEye.jpg"; 
+    img.classList.add('pop-image');
+    
+    // Set a width for the pop-up
+    img.style.width = '300px'; 
+    
+    document.body.appendChild(img);
+
+    // Remove the image from the folder after 1.5 seconds so the site stays fast
+    setTimeout(() => {
+        img.remove();
+    }, 1500);
+}

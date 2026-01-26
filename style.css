@@ -70,7 +70,7 @@ button {
     color: white;
     /* Keep it relative so it stays in the flexbox flow for now */
     position: relative; 
-    transition: all 0.8s ease;
+    transition: all 0.5s ease;
     white-space: nowrap;
 }
 
@@ -139,4 +139,29 @@ button {
         opacity: 0;
         transform: translateY(-80px) rotate(45deg);
     }
+}
+
+@keyframes popFade {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.5);
+    }
+    20% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.1);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1.5);
+    }
+}
+
+.pop-image {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none; /* So she can't click the image by accident */
+    z-index: 20000; /* Ensure it is on top of everything, including the trail */
+    animation: popFade 1.5s forwards;
 }
