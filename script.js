@@ -142,7 +142,7 @@ yesButton.addEventListener('click', () => {
     document.body.appendChild(overlay);
 
     // Trigger fade in
-    setTimeout(() => { overlay.style.opacity = '1'; }, 10);
+    setTimeout(() => { overlay.style.opacity = '1'; }, 100);
 
     // Wait for fade to complete, then swap content
     setTimeout(() => {
@@ -155,8 +155,8 @@ yesButton.addEventListener('click', () => {
         overlay.style.opacity = '0';
         
         // Remove overlay
-        setTimeout(() => { overlay.remove(); }, 1000);
-    }, 1000);
+        setTimeout(() => { overlay.remove(); }, 2500);
+    }, 2500);
 });
 
 // Cursor Trail Effect
