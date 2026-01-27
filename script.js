@@ -7,11 +7,8 @@ const phrases = [
     "Are you sure?",
     "Really sure??",
     "Pretty please?",
-    "I'm gonna cry...",
-    "You're breaking my heart ;(",
     "RECONSIDER PLEASE",
     "I'm not taking no for an answer!",
-    "Okay, now you're just being mean"
 ];
 
 let clickCount = 0;
@@ -67,10 +64,6 @@ noButton.addEventListener('click', () => {
         // If she manages to click it AFTER it starts moving
         showError();
     }
-
-    if (clickCount === 3) document.title = "Wait, come back! 🥺";
-if (clickCount === 6) document.title = "STOP CLICKING NO!";
-if (clickCount >= phrases.length - 1) document.title = "ERROR: NO NOT FOUND";
 });
 
 // Runaway Logic: Fired when she moves mouse over the button
@@ -83,7 +76,6 @@ noButton.addEventListener('mousemove', () => {
 
 noButton.addEventListener('click', () => {
   const audio = new Audio("sounds/mainPage/vine-boom.mp3");
-    clickCount++;
     // TRIGGER THE POP-UP
     spawnPopImage();
     audio.play()
@@ -135,10 +127,36 @@ function closeError() {
 }
 
 yesButton.addEventListener('click', () => {
-    document.querySelector('.photo-collage').remove();
-    document.querySelector('.waves').remove();
-    document.getElementById('questionContainer').style.display = 'none';
-    document.getElementById('successContainer').style.display = 'block';
+    // Create a pink overlay to mask the transition
+    const overlay = document.createElement('div');
+    overlay.style.position = 'fixed';
+    overlay.style.top = '0';
+    overlay.style.left = '0';
+    overlay.style.width = '100%';
+    overlay.style.height = '100%';
+    overlay.style.backgroundColor = '#f6a5c1'; // Match body background
+    overlay.style.zIndex = '9999'; // Above content, below hearts
+    overlay.style.opacity = '0';
+    overlay.style.transition = 'opacity 1s ease';
+    overlay.style.pointerEvents = 'none';
+    document.body.appendChild(overlay);
+
+    // Trigger fade in
+    setTimeout(() => { overlay.style.opacity = '1'; }, 10);
+
+    // Wait for fade to complete, then swap content
+    setTimeout(() => {
+        document.querySelector('.photo-collage').remove();
+        document.querySelector('.waves').remove();
+        document.getElementById('questionContainer').style.display = 'none';
+        document.getElementById('successContainer').style.display = 'block';
+        
+        // Fade out
+        overlay.style.opacity = '0';
+        
+        // Remove overlay
+        setTimeout(() => { overlay.remove(); }, 1000);
+    }, 1000);
 });
 
 // Cursor Trail Effect
@@ -170,7 +188,6 @@ document.addEventListener('mousemove', (e) => {
 function spawnPopImage() {
     const img = document.createElement('img');
     
-    // Replace 'sad-cat.png' with whatever image you want to pop up
     img.src = "images/mainPage/dogSideEye.jpg"; 
     img.classList.add('pop-image');
     

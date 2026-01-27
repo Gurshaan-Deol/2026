@@ -21,7 +21,7 @@ body {
 
 h1 {
     color: #ff257e;
-    font-size: 2.5rem;
+    font-size: 3.3rem;
     margin-bottom: 30px;
     font-family: 'MyCustomFont', sans-serif;
 } 
@@ -42,11 +42,11 @@ h1 {
 button {
     font-family: 'MyCustomFont', sans-serif;
     padding: 15px 30px;
-    font-size: 1.2rem;
+    font-size: 2.4rem;
     border: none;
     border-radius: 10px;
     cursor: pointer;
-    transition: transform 0.2s ease;
+    transition: transform 0.1s ease;
 }
 
 .buttons.visible {
@@ -86,7 +86,7 @@ button {
     color: white;
     /* Keep it relative so it stays in the flexbox flow for now */
     position: relative; 
-    transition: all 0.5s ease;
+    transition: all 0.2s ease;
     white-space: nowrap;
 }
 
@@ -223,9 +223,9 @@ button {
 
 /* Positioning them in the corners */
 .p1 { width: 200px; top: 5%; left: 5%; --rotation: -15deg; animation-delay: 0s; }
-.p2 { width: 170px; top: 7%; right: 7%; --rotation: 10deg; animation-delay: 1.5s; }
-.p3 { width: 190px; bottom: 10%; left: 10%; --rotation: 5deg; animation-delay: 3s; }
-.p4 { width: 280px; bottom: 10%; right: 8%; --rotation: -10deg; animation-delay: 4.5s; }
+.p2 { width: 170px; top: 7%; right: 7%; --rotation: 10deg; animation-delay: 0.3s; }
+.p3 { width: 190px; bottom: 10%; left: 10%; --rotation: 5deg; animation-delay: 0.6s; }
+.p4 { width: 280px; bottom: 10%; right: 8%; --rotation: -15deg; animation-delay: 0.9s; }
 
 .floating-heart {
     position: absolute;
@@ -235,6 +235,7 @@ button {
     user-select: none;
     pointer-events: none;
     animation: floatUp 5s linear infinite;
+    z-index: 100000; /* Ensure hearts stay on top of the fade overlay */
     
 }
 
@@ -295,4 +296,3 @@ button {
     width: calc(120% + 1.3px); 
     height: 150px;
 }
-
