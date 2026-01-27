@@ -11,7 +11,7 @@ const phrases = [
     "You're breaking my heart ;(",
     "RECONSIDER PLEASE",
     "I'm not taking no for an answer!",
-    "Okay, now you're just being mean!"
+    "Okay, now you're just being mean"
 ];
 
 let clickCount = 0;
@@ -43,7 +43,7 @@ noButton.addEventListener('click', () => {
     const opacity = Math.min(0.3 + (clickCount * 0.1), 1.0);
     const blur = clickCount * 4; 
     
-    yesButton.style.setProperty('--glow-color', `rgba(232, 30, 99, ${opacity})`);
+    yesButton.style.setProperty('--glow-color', `#ed4b82`);
     yesButton.style.setProperty('--glow-blur', `${blur}px`);
     
     const brightness = 100 + (clickCount * 10);
@@ -134,23 +134,23 @@ function closeError() {
     document.getElementById('errorPopup').style.display = 'none';
 }
 
-// Success Screen
 yesButton.addEventListener('click', () => {
-    window.location.href = 'yes.html';
+    document.querySelector('.photo-collage').remove();
+    document.querySelector('.waves').remove();
+    document.getElementById('questionContainer').style.display = 'none';
+    document.getElementById('successContainer').style.display = 'block';
 });
 
 // Cursor Trail Effect
 document.addEventListener('mousemove', (e) => {
-    const trail = document.createElement('img');
+    const trail = document.createElement('div');
     
-    // REPLACE THE URL BELOW WITH YOUR IMAGE
-    trail.src = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0icmVkIj48cGF0aCBkPSJNMTIgMjEuMzVsLTEuNDUtMS4zMkM1LjQgMTUuMzYgMiAxMi4yOCAyIDguNSAyIDUuNDIgNC40MiAzIDcuNSAzYzEuNzQgMCAzLjQxLjgxIDQuNSAyLjA5QzEzLjA5IDMuODEgMTQuNzYgMyAxNi41IDMgMTkuNTggMyAyMiA1LjQyIDIyIDguNWMwIDMuNzgtMy40IDYuODYtOC41NSAxMS41NEwxMiAyMS4zNXoiLz48L3N2Zz4='; 
+    trail.innerText = '❤️';
     
     trail.className = 'trail';
     trail.style.left = `${e.pageX}px`;
     trail.style.top = `${e.pageY}px`;
-    trail.style.width = '30px';
-    trail.style.height = '30px';
+    trail.style.fontSize = '24px';
 
 
     document.body.appendChild(trail);
@@ -184,3 +184,44 @@ function spawnPopImage() {
         img.remove();
     }, 1500);
 }
+
+function createFloatingHeart() {
+    const heart = document.createElement('div');
+    heart.classList.add('floating-heart');
+    heart.innerText = '❤️';
+    heart.style.left = Math.random() * 90 + 'vw';
+    heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+    
+    // Randomize rotation
+    const startRot = Math.random() * 360;
+    const endRot = Math.random() * 360;
+    heart.style.setProperty('--start-rot', `${startRot}deg`);
+    heart.style.setProperty('--end-rot', `${endRot}deg`);
+
+    document.body.appendChild(heart);
+    
+    setTimeout(() => { heart.remove(); }, 8000);
+}
+setInterval(createFloatingHeart, 300);
+
+// Typewriter Effect
+const questionText = "Will you be my Valentine?";
+question.innerText = ""; // Clear text initially
+
+let charIndex = 0;
+function typeWriter() {
+    if (charIndex < questionText.length) {
+        question.innerHTML += questionText.charAt(charIndex);
+        charIndex++;
+        setTimeout(typeWriter, 100); // Adjust typing speed here
+    } else {
+        // Show polaroids first
+        document.querySelector('.photo-collage').classList.add('visible');
+        
+        // Then show buttons after a delay
+        setTimeout(() => {
+            document.querySelector('.buttons').classList.add('visible');
+        }, 1000);
+    }
+}
+setTimeout(typeWriter, 1000); // Start the effect after 1 second
