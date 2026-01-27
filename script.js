@@ -6,8 +6,8 @@ const phrases = [
     "No",
     "Are you sure?",
     "Really sure??",
-    "Pretty please?",
-    "RECONSIDER PLEASE",
+    "Pretty please???",
+    "PLEASE RECONSIDER",
     "I'm not taking no for an answer!",
 ];
 
@@ -153,6 +153,19 @@ yesButton.addEventListener('click', () => {
         
         // Fade out
         overlay.style.opacity = '0';
+
+        // Sequence Animations
+        setTimeout(() => {
+            document.querySelector('.success-collage').classList.add('visible');
+        }, 300);
+
+        setTimeout(() => {
+            document.getElementById('success-text').classList.add('visible');
+        }, 1500);
+
+        setTimeout(() => {
+            document.getElementById('birthdayNote').classList.add('visible');
+        }, 3000);
         
         // Remove overlay
         setTimeout(() => { overlay.remove(); }, 2500);
@@ -234,6 +247,7 @@ function typeWriter() {
     } else {
         // Show polaroids first
         document.querySelector('.photo-collage').classList.add('visible');
+        document.querySelector('.waves').classList.add('visible');
         
         // Then show buttons after a delay
         setTimeout(() => {
@@ -241,4 +255,40 @@ function typeWriter() {
         }, 1000);
     }
 }
-setTimeout(typeWriter, 1000); // Start the effect after 1 second
+
+// Background Music Control
+const bgMusic = document.getElementById('bgMusic');
+
+// Function to fade in music
+function playMusic() {
+    if (bgMusic.paused) {
+        bgMusic.volume = 0;
+        bgMusic.play();
+        
+        let vol = 0;
+        const interval = setInterval(() => {
+            if (vol < 1) {
+                vol += 0.05;
+                bgMusic.volume = Math.min(vol, 1);
+            } else {
+                clearInterval(interval);
+            }
+        }, 100); // Increases volume every 100ms (2 seconds total fade in)
+    }
+}
+
+// Start music on the first click anywhere on the page
+// document.body.addEventListener('click', playMusic, { once: true });
+
+// Start Screen Logic
+const startContainer = document.getElementById('startContainer');
+const startHeart = document.querySelector('.start-heart');
+
+startHeart.addEventListener('click', () => {
+    playMusic();
+    startContainer.style.opacity = '0';
+    setTimeout(() => {
+        startContainer.style.display = 'none';
+        typeWriter(); 
+    }, 3000); // DELAY: Adjust this number (in ms) to sync with your song!
+});
