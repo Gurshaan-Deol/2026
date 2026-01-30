@@ -340,11 +340,9 @@ button {
     animation-delay: -2s;
 }
 
-/* 3. Important update to your svg class */
 .waves svg {
     position: relative;
     display: block;
-    /* We make the width 120% so the edges don't show when it slides */
     width: calc(120% + 1.3px); 
     height: 150px;
 }

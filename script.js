@@ -8,7 +8,7 @@ const phrases = [
     "Really sure??",
     "Pretty please???",
     "PLEASE RECONSIDER",
-    "I'm not taking no for an answer!",
+    "I'm not taking no for an answer",
 ];
 
 let clickCount = 0;
@@ -223,7 +223,7 @@ function createFloatingHeart() {
     heart.style.animationDuration = Math.random() * 3 + 2 + 's';
     
     // Randomize rotation
-    const startRot = Math.random() * 360;
+    const startRot = Math.random();
     const endRot = Math.random() * 360;
     heart.style.setProperty('--start-rot', `${startRot}deg`);
     heart.style.setProperty('--end-rot', `${endRot}deg`);
@@ -232,7 +232,7 @@ function createFloatingHeart() {
     
     setTimeout(() => { heart.remove(); }, 8000);
 }
-setInterval(createFloatingHeart, 300);
+setInterval(createFloatingHeart, 220);
 
 // Typewriter Effect
 const questionText = "Will you be my Valentine?";
